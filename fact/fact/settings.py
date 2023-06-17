@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-b2j)pok48pn8&7m57cq(xh^9(s9c46m_5g(n^6y_m^=e5e6gfj
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['luisesp.cloud']
 
 
 # Application definition

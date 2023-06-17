@@ -1,0 +1,19 @@
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: fact
+    networks:
+      - web
+    volumes:
+      - ./:/fact
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fact.rule=Host(`luisesp.cloud`)
+      - traefik.http.routers.fact.service=fact
+      - traefik.http.services.fact.loadbalancer.server.port=8000
