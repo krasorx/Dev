@@ -1,0 +1,35 @@
+networks:
+  web:
+    external: true
+
+services:
+  django:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: fact
+    networks:
+      - web
+    volumes:
+      - ./:/fact
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fact.rule=Host(`luisesp.cloud`)
+      - traefik.http.routers.fact.service=fact
+      - traefik.http.services.fact.loadbalancer.server.port=8000
+  django-db:
+    container_name: specter-db
+    image: postgres:15.3
+    environment:
+      - POSTGRES_DB=specter
+      - POSTGRES_USER=krasorx
+      - POSTGRES_PASSWORD=asdjkl123
+      - PGDATA=/var/lib/postgresqlFact/data/pgdata
+      - TZ=America/Argentina/Buenos_Aires
+    volumes:
+      - specter-data:/var/lib/postgresqlFact/data/pgdata
+    networks:
+      - web
+
+volumes:
+  specter-data:
